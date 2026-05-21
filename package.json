@@ -1,0 +1,17 @@
+{
+  "name": "rm-sobras-reciclagem-industrial",
+  "version": "1.0.0",
+  "description": "Protótipo Premium do site institucional e manual de marca da RM Sobras e Reciclagem Industrial",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx http-server -p 3000 -c-1",
+    "start": "npx http-server -p 3000 -c-1"
+  },
+  "keywords": [
+    "reciclagem",
+    "sobras-industriais",
+    "equipamentos-industriais"
+  ],
+  "author": "Agência Premium UI/UX",
+  "license": "ISC"
+}
