@@ -129,7 +129,16 @@ function initSmoothScrolling() {
             const targetEl = document.querySelector(targetId);
             if (targetEl) {
                 e.preventDefault();
-                const offsetPosition = targetEl.offsetTop - 100;
+                
+                // Cálculo dinâmico das alturas dos cabeçalhos fixos
+                const switcher = document.getElementById('prototype-switcher');
+                const header = document.querySelector('.main-header');
+                const switcherHeight = switcher ? switcher.offsetHeight : 0;
+                const headerHeight = header ? header.offsetHeight : 0;
+                
+                // Calcula o offset exato com 15px de respiro
+                const offsetPosition = targetEl.offsetTop - (switcherHeight + headerHeight + 15);
+                
                 window.scrollTo({
                     top: offsetPosition,
                     behavior: 'smooth'

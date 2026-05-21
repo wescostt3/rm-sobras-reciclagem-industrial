@@ -288,8 +288,21 @@ img {
 .prototype-view {
     display: none;
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .prototype-view.active {
     display: block;
+    animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 /* =========================================================================
@@ -463,6 +476,8 @@ img {
 .hero-actions {
     display: flex;
     gap: 20px;
+    row-gap: 15px;
+    column-gap: 20px;
     flex-wrap: wrap;
 }
 
@@ -1053,6 +1068,8 @@ img {
 .cta-buttons {
     display: flex;
     gap: 20px;
+    row-gap: 15px;
+    column-gap: 20px;
     flex-wrap: wrap;
 }
 
@@ -1417,7 +1434,7 @@ img {
     background-color: var(--color-charcoal-light);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     position: sticky;
-    top: 130px; /* Switcher (50px) + Header height scrolled (80px) */
+    top: 120px; /* Switcher (50px) + Header height scrolled (70px) */
     z-index: 100;
 }
 
@@ -1452,6 +1469,7 @@ img {
 }
 .brand-tab-content.active {
     display: block;
+    animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .card-branding-info {
@@ -2151,6 +2169,10 @@ img {
     .grid-3 { grid-template-columns: repeat(2, 1fr); }
     .hero-title { font-size: 44px; }
     .equip-grid { grid-template-columns: repeat(2, 1fr); }
+    .branding-tabs-nav {
+        position: static;
+        top: auto;
+    }
 }
 
 @media (max-width: 768px) {
@@ -2174,7 +2196,17 @@ img {
     
     .grid-2 { grid-template-columns: 1fr; }
     .grid-3 { grid-template-columns: 1fr; }
+    .grid-4 { grid-template-columns: 1fr; }
     .col-span-2 { grid-column: span 1; }
+    
+    /* Responsive Spacings and Titles */
+    .py-120 { padding-top: 60px; padding-bottom: 60px; }
+    .py-80 { padding-top: 40px; padding-bottom: 40px; }
+    .py-60 { padding-top: 30px; padding-bottom: 30px; }
+    .section-title { font-size: 28px; margin-bottom: 16px; }
+    .section-subtitle { font-size: 15px; }
+    .gap-60 { gap: 30px; }
+    .gap-40 { gap: 20px; }
     
     .mobile-nav-toggle {
         display: block;
@@ -2182,7 +2214,7 @@ img {
     
     .nav-menu {
         position: absolute;
-        top: 80px;
+        top: 100%;
         left: 0;
         width: 100%;
         background-color: var(--color-black);
@@ -2250,8 +2282,9 @@ img {
     }
     
     .branding-tabs-nav {
+        position: static;
+        top: auto;
         flex-wrap: wrap;
-        top: 140px;
     }
     
     .brand-tab-btn {
@@ -2261,6 +2294,20 @@ img {
     
     .instagram-feed-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-actions, .cta-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+    .hero-actions .btn, .cta-buttons .btn {
+        width: 100%;
+        text-align: center;
+        padding: 14px 20px;
+        font-size: 14px;
     }
 }
 
@@ -2278,6 +2325,8 @@ img {
     }
     
     .cta-title { font-size: 32px; }
+    
+    .hero-title { font-size: 28px; }
     
     .main-header {
         top: 100px; /* Ajuste mobile extra */
