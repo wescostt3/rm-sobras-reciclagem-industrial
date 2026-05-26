@@ -16,19 +16,110 @@
 </head>
 <body>
 
+    <!-- 1. BOOT LOADER (RM OS INITIALIZATION) -->
+    <div id="boot-loader" class="boot-loader">
+        <div class="loader-grid-bg"></div>
+        <div class="loader-content">
+            <div class="loader-logo-area">
+                <i class="fa-solid fa-recycle text-green loader-spin"></i>
+                <div class="loader-brand">
+                    <span class="brand-title">RM SOBRAS</span>
+                    <span class="brand-system">RESOURCE RECYCLING OS v1.0.8</span>
+                </div>
+            </div>
+            <div class="loader-bar-container">
+                <div class="loader-bar" id="loader-bar"></div>
+            </div>
+            <div class="loader-status-bar">
+                <span class="loader-status-msg" id="loader-status-msg">CONNECTING TO LME COMMODITY EXCHANGE...</span>
+                <span class="loader-percentage" id="loader-percentage">0%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. CUSTOM HUD INTERACTIVE CURSOR -->
+    <div id="custom-cursor" class="custom-cursor">
+        <div class="cursor-dot"></div>
+        <div class="cursor-ring">
+            <span id="custom-cursor-text"></span>
+        </div>
+    </div>
+
+    <!-- 3. DYNAMIC HUD & BG ELEMENTS -->
+    <canvas id="canvas-bg"></canvas>
+    <div class="noise-overlay" aria-hidden="true"></div>
+    <div class="edge-blur-overlay" aria-hidden="true">
+        <div class="edge-blur-top"></div>
+        <div class="edge-blur-bottom"></div>
+    </div>
+
+    <!-- 4. VIEWPORT BORDERS & CORNER CROSSHAIRS -->
+    <div class="hud-frame-line top"></div>
+    <div class="hud-frame-line bottom"></div>
+    <div class="hud-frame-line left"></div>
+    <div class="hud-frame-line right"></div>
+    
+    <div class="hud-crosshair top-left">+</div>
+    <div class="hud-crosshair top-right">+</div>
+    <div class="hud-crosshair bottom-left">+</div>
+    <div class="hud-crosshair bottom-right">+</div>
+
+    <!-- 5. REAL-TIME HUD DEBUG DATA -->
+    <div id="hud-debug" class="hud-debug">
+        <div class="hud-debug-header"><i class="fa-solid fa-terminal text-green"></i> LOGS DO SISTEMA</div>
+        <div class="hud-debug-body">
+            <div class="hud-debug-line">TEMPO.SIS: <span id="debug-time">0.0s</span></div>
+            <div class="hud-debug-line">MOUSE.X: <span id="debug-x">0</span></div>
+            <div class="hud-debug-line">MOUSE.Y: <span id="debug-y">0</span></div>
+            <div class="hud-debug-line">ROLAGEM.Y: <span id="debug-scroll">0px</span></div>
+            <div class="hud-debug-line">ROLAGEM.PCT: <span id="debug-scroll-pct">0%</span></div>
+        </div>
+    </div>
+
     <!-- Prototype Switcher Header (HUD Agency Control) -->
     <div id="prototype-switcher">
         <div class="switcher-container">
-            <span class="switcher-title"><i class="fa-solid fa-sliders text-green"></i> CONTROLADOR DE PROTÓTIPO:</span>
-            <div class="switcher-buttons">
-                <button id="btn-view-website" class="switcher-btn active" onclick="switchView('website')">
-                    <i class="fa-solid fa-globe"></i> Website Institucional
-                </button>
-                <button id="btn-view-branding" class="switcher-btn" onclick="switchView('branding')">
-                    <i class="fa-solid fa-palette"></i> Branding & Identity Hub
-                </button>
+            <div class="switcher-main-row">
+                <span class="switcher-title"><i class="fa-solid fa-sliders text-green"></i> CONTROLADOR DE PROTÓTIPO:</span>
+                <div class="switcher-buttons">
+                    <button id="btn-view-website" class="switcher-btn active" onclick="switchView('website')">
+                        <i class="fa-solid fa-globe"></i> Website Institucional
+                    </button>
+                    <button id="btn-view-branding" class="switcher-btn" onclick="switchView('branding')">
+                        <i class="fa-solid fa-palette"></i> Branding & Identidade
+                    </button>
+                </div>
+                <div class="switcher-badge">Agência Premium UI/UX</div>
             </div>
-            <div class="switcher-badge">Agência Premium UI/UX</div>
+            
+            <!-- Row 2: Commodities Metals Ticker -->
+            <div class="switcher-ticker-row">
+                <div class="metals-ticker">
+                    <div class="ticker-label"><i class="fa-solid fa-chart-line text-green animate-pulse"></i> LME COM:</div>
+                    <div class="ticker-track">
+                        <div class="ticker-item" id="ticker-copper" data-base="52800">
+                            <span class="t-name">COBRE</span>
+                            <span class="t-val">R$ 52.800/t</span>
+                            <span class="t-change up"><i class="fa-solid fa-caret-up"></i> +1.12%</span>
+                        </div>
+                        <div class="ticker-item" id="ticker-aluminium" data-base="13100">
+                            <span class="t-name">ALUMÍNIO</span>
+                            <span class="t-val">R$ 13.100/t</span>
+                            <span class="t-change down"><i class="fa-solid fa-caret-down"></i> -0.32%</span>
+                        </div>
+                        <div class="ticker-item" id="ticker-inox" data-base="16700">
+                            <span class="t-name">INOX</span>
+                            <span class="t-val">R$ 16.700/t</span>
+                            <span class="t-change up"><i class="fa-solid fa-caret-up"></i> +0.68%</span>
+                        </div>
+                        <div class="ticker-item" id="ticker-scrap" data-base="2100">
+                            <span class="t-name">SUCATA DE FERRO</span>
+                            <span class="t-val">R$ 2.100/t</span>
+                            <span class="t-change up"><i class="fa-solid fa-caret-up"></i> +2.34%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -75,8 +166,7 @@
 
             <!-- HERO PRINCIPAL -->
             <section id="inicio" class="hero-section" style="background-image: linear-gradient(180deg, rgba(17, 24, 39, 0.85) 0%, rgba(17, 24, 39, 0.95) 100%), url('assets/industrial_hero_bg.png');">
-                <div class="hero-glow-effect"></div>
-                <div class="container hero-content">
+                <div class="container hero-content hero-grid-split">
                     <div class="hero-text-block">
                         <div class="hero-tag"><i class="fa-solid fa-industry"></i> Negociação e Sustentabilidade de Ativos</div>
                         <h1 class="hero-title">
@@ -92,6 +182,157 @@
                             <a href="#servicos" class="btn btn-outline btn-lg">
                                 <i class="fa-solid fa-gears"></i> Conhecer serviços
                             </a>
+                        </div>
+                    </div>
+
+                    <!-- Holographic CAD Scanner -->
+                    <div class="hero-scanner-hud" id="hero-scanner-hud">
+                        <div class="scanner-header">
+                            <button class="scanner-tab active" data-asset="transformer">
+                                <i class="fa-solid fa-bolt"></i> [01] TRANSF.04
+                            </button>
+                            <button class="scanner-tab" data-asset="motor">
+                                <i class="fa-solid fa-charging-station"></i> [02] MOTOR.12
+                            </button>
+                            <button class="scanner-tab" data-asset="chiller">
+                                <i class="fa-solid fa-snowflake"></i> [03] CHILLER.09
+                            </button>
+                        </div>
+                        
+                        <div class="scanner-viewport">
+                            <div class="scan-grid-lines"></div>
+                            <div class="scan-line"></div>
+                            
+                            <!-- 3D Holographic Model Layered Slices -->
+                            <div class="model-layers active" id="layers-transformer">
+                                <div class="model-layer layer-back" style="background-image: url('assets/transformer_3d.png');"></div>
+                                <div class="model-layer layer-center" style="background-image: url('assets/transformer_3d.png');"></div>
+                                <div class="model-layer layer-front" style="background-image: url('assets/transformer_3d.png');"></div>
+                            </div>
+                            
+                            <div class="model-layers" id="layers-motor">
+                                <div class="model-layer layer-back" style="background-image: url('assets/motor_3d.png');"></div>
+                                <div class="model-layer layer-center" style="background-image: url('assets/motor_3d.png');"></div>
+                                <div class="model-layer layer-front" style="background-image: url('assets/motor_3d.png');"></div>
+                            </div>
+                            
+                            <div class="model-layers" id="layers-chiller">
+                                <div class="model-layer layer-back" style="background-image: url('assets/chiller_3d.png');"></div>
+                                <div class="model-layer layer-center" style="background-image: url('assets/chiller_3d.png');"></div>
+                                <div class="model-layer layer-front" style="background-image: url('assets/chiller_3d.png');"></div>
+                            </div>
+                            
+                            <!-- Blueprint SVGs -->
+                            <!-- 1. Transformer Blueprint -->
+                            <svg class="blueprint-svg active" id="blueprint-transformer" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Bushings -->
+                                <g class="cad-part part-bushings">
+                                    <line x1="70" y1="12" x2="88" y2="12" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="89" y="14" fill="#00A651" font-size="3" font-family="monospace" class="part-text">ISOLADORES</text>
+                                </g>
+                                
+                                <!-- Core -->
+                                <g class="cad-part part-core">
+                                    <line x1="50" y1="50" x2="8" y2="50" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="7" y="48" fill="#00A651" font-size="3" font-family="monospace" text-anchor="end" class="part-text">NUCLEO</text>
+                                </g>
+                                
+                                <!-- Coils -->
+                                <g class="cad-part part-coil-left">
+                                    <line x1="38" y1="50" x2="8" y2="62" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="7" y="65" fill="#00A651" font-size="3" font-family="monospace" text-anchor="end" class="part-text">BOBINAS</text>
+                                </g>
+                                <g class="cad-part part-coil-right">
+                                </g>
+                                
+                                <!-- Cooling Fins -->
+                                <g class="cad-part part-fins">
+                                    <line x1="78" y1="55" x2="88" y2="55" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="89" y="57" fill="#00A651" font-size="3" font-family="monospace" class="part-text">ALETAS</text>
+                                </g>
+                            </svg>
+                            
+                            <!-- 2. Motor Blueprint -->
+                            <svg class="blueprint-svg" id="blueprint-motor" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Junction Box -->
+                                <g class="cad-part part-jbox">
+                                    <line x1="50" y1="13" x2="88" y2="13" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="89" y="15" fill="#00A651" font-size="3" font-family="monospace" class="part-text">CONEXAO</text>
+                                </g>
+                                
+                                <!-- Stator / Casing -->
+                                <g class="cad-part part-stator">
+                                    <line x1="45" y1="65" x2="8" y2="65" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="7" y="63" fill="#00A651" font-size="3" font-family="monospace" text-anchor="end" class="part-text">ESTATOR</text>
+                                </g>
+                                
+                                <!-- Rotor & Shaft -->
+                                <g class="cad-part part-rotor">
+                                    <line x1="78" y1="48" x2="88" y2="48" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="89" y="50" fill="#00A651" font-size="3" font-family="monospace" class="part-text">ROTOR</text>
+                                </g>
+                                
+                                <!-- Cooling Fan -->
+                                <g class="cad-part part-fan">
+                                    <line x1="21" y1="48" x2="8" y2="35" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="7" y="33" fill="#00A651" font-size="3" font-family="monospace" text-anchor="end" class="part-text">HELICE</text>
+                                </g>
+                            </svg>
+                            
+                            <!-- 3. Chiller Blueprint -->
+                            <svg class="blueprint-svg" id="blueprint-chiller" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Chiller housing -->
+                                <g class="cad-part part-housing">
+                                    <line x1="15" y1="30" x2="5" y2="15" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="5" y="11" fill="#00A651" font-size="3" font-family="monospace" class="part-text">GABINETE</text>
+                                </g>
+                                
+                                <!-- Compressors -->
+                                <g class="cad-part part-compressor-left">
+                                    <line x1="30" y1="45" x2="8" y2="45" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="7" y="43" fill="#00A651" font-size="3" font-family="monospace" text-anchor="end" class="part-text">COMPRESSOR</text>
+                                </g>
+                                <g class="cad-part part-compressor-right">
+                                </g>
+                                
+                                <!-- Fan Outlines -->
+                                <g class="cad-part part-chiller-fans">
+                                    <line x1="50" y1="22" x2="88" y2="22" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="89" y="24" fill="#00A651" font-size="3" font-family="monospace" class="part-text">EXAUSTOR</text>
+                                </g>
+                                
+                                <!-- Piping Connections -->
+                                <g class="cad-part part-piping">
+                                    <line x1="90" y1="38" x2="90" y2="58" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="89" y="63" fill="#00A651" font-size="3" font-family="monospace" class="part-text">FLUXO</text>
+                                </g>
+                            </svg>
+                            
+                            <div class="hud-target-box">
+                                <span class="scan-status">ESCANEANDO [OK]</span>
+                                <span class="scan-target" id="scan-target-id">REF.SIS: TR-004</span>
+                            </div>
+                        </div>
+                        
+                        <div class="scanner-telemetry">
+                            <div class="telemetry-grid">
+                                <div class="tel-item">
+                                    <span class="tel-lbl">TENSÃO</span>
+                                    <span class="tel-val" id="tel-volts">13.8 kV</span>
+                                </div>
+                                <div class="tel-item">
+                                    <span class="tel-lbl">TAXA DE CARGA</span>
+                                    <span class="tel-val" id="tel-load">82.4%</span>
+                                </div>
+                                <div class="tel-item">
+                                    <span class="tel-lbl">TEMP. NÚCLEO</span>
+                                    <span class="tel-val" id="tel-temp">41.2°C</span>
+                                </div>
+                                <div class="tel-item">
+                                    <span class="tel-lbl">FREQUÊNCIA</span>
+                                    <span class="tel-val" id="tel-freq">60.00 Hz</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -429,13 +670,71 @@
                             </div>
                         </div>
                         <div class="sustain-graphic-wrapper">
-                            <div class="graphic-circle-bg">
-                                <div class="center-logo">
+                            <div class="sustain-solar-system">
+                                <div class="solar-center-logo">
                                     <img src="assets/rm_industrial_logo.png" alt="Logo RM">
                                 </div>
-                                <div class="rotating-arrow arrow-1"><i class="fa-solid fa-recycle text-green"></i></div>
-                                <div class="rotating-arrow arrow-2"><i class="fa-solid fa-industry text-blue"></i></div>
-                                <div class="rotating-arrow arrow-3"><i class="fa-solid fa-leaf text-green"></i></div>
+                                
+                                <!-- 5 Orbit Rings with items -->
+                                <!-- Orbit 1: Cobre -->
+                                <div class="orbit-ring ring-1">
+                                    <div class="orbit-item item-copper" data-orbit="1">
+                                        <i class="fa-solid fa-link"></i>
+                                        <div class="orbit-hud-card">
+                                            <h4>COBRE LME</h4>
+                                            <p>RECICLABILIDADE: 100%</p>
+                                            <p>GRAU DE PUREZA: 99.8%</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Orbit 2: Alumínio -->
+                                <div class="orbit-ring ring-2">
+                                    <div class="orbit-item item-aluminium" data-orbit="2">
+                                        <i class="fa-solid fa-cubes"></i>
+                                        <div class="orbit-hud-card">
+                                            <h4>ALUMÍNIO</h4>
+                                            <p>EMISSÃO CO2: -95%</p>
+                                            <p>RETORNO CAIXA: ALTO</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Orbit 3: Inox -->
+                                <div class="orbit-ring ring-3">
+                                    <div class="orbit-item item-inox" data-orbit="3">
+                                        <i class="fa-solid fa-industry"></i>
+                                        <div class="orbit-hud-card">
+                                            <h4>INOX</h4>
+                                            <p>RESISTÊNCIA: EXTRA</p>
+                                            <p>CICLO DE VIDA: INF.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Orbit 4: Motores -->
+                                <div class="orbit-ring ring-4">
+                                    <div class="orbit-item item-motor" data-orbit="4">
+                                        <i class="fa-solid fa-charging-station"></i>
+                                        <div class="orbit-hud-card">
+                                            <h4>MOTORES ELÉTRICOS</h4>
+                                            <p>RECUPERAÇÃO: COBRE</p>
+                                            <p>AVALIAÇÃO: IMEDIATA</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Orbit 5: Transformadores -->
+                                <div class="orbit-ring ring-5">
+                                    <div class="orbit-item item-transformer" data-orbit="5">
+                                        <i class="fa-solid fa-bolt"></i>
+                                        <div class="orbit-hud-card">
+                                            <h4>TRANSFORMADORES</h4>
+                                            <p>DESMONTE: TÉCNICO</p>
+                                            <p>DESTINAÇÃO: PNRS</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -809,24 +1108,98 @@
                                 <div class="card-3d">
                                     <!-- Frente -->
                                     <div class="card-face card-front">
-                                        <div class="card-logo-area">
-                                            <img src="assets/rm_industrial_logo.png" alt="Logo RM">
+                                        <div class="card-grid-bg"></div>
+                                        <div class="card-scan-line"></div>
+                                        
+                                        <!-- Cantos HUD -->
+                                        <div class="card-corner top-left">+</div>
+                                        <div class="card-corner top-right">+</div>
+                                        <div class="card-corner bottom-left">+</div>
+                                        <div class="card-corner bottom-right">+</div>
+                                        
+                                        <div class="card-brand-wrapper">
+                                            <img src="assets/rm_industrial_logo.png" alt="Logo RM" class="card-logo">
+                                            <div class="card-brand-text">
+                                                <div class="brand-name-main">RM SOBRAS E</div>
+                                                <div class="brand-name-sub">RECICLAGEM INDUSTRIAL</div>
+                                            </div>
+                                            <div class="card-decor-line"></div>
                                         </div>
-                                        <div class="card-decor-bar"></div>
+                                        
+                                        <div class="card-telemetry">
+                                            <div class="tel-left">LAT 23° 30' S // LON 47° 27' W</div>
+                                            <div class="tel-right">SIS.STATUS: ATIVO</div>
+                                        </div>
                                     </div>
                                     <!-- Verso -->
                                     <div class="card-face card-back">
-                                        <div class="card-back-header">
-                                            <strong>Rafael Moraes</strong>
-                                            <span>Diretor Comercial</span>
-                                        </div>
-                                        <div class="card-back-details">
-                                            <p><i class="fa-brands fa-whatsapp text-green"></i> (11) 99999-9999</p>
-                                            <p><i class="fa-solid fa-envelope text-green"></i> rafael@rmsobras.com.br</p>
-                                            <p><i class="fa-solid fa-globe text-green"></i> www.rmsobras.com.br</p>
-                                        </div>
-                                        <div class="card-back-logo">
-                                            <img src="assets/rm_industrial_logo.png" alt="Logo RM">
+                                        <div class="card-grid-bg"></div>
+                                        
+                                        <!-- Cantos HUD -->
+                                        <div class="card-corner top-left">+</div>
+                                        <div class="card-corner top-right">+</div>
+                                        <div class="card-corner bottom-left">+</div>
+                                        <div class="card-corner bottom-right">+</div>
+                                        
+                                        <div class="card-back-grid">
+                                            <!-- Coluna Esquerda: Informações -->
+                                            <div class="card-back-left">
+                                                <div class="card-header-info">
+                                                    <span class="card-name">Rafael Moraes</span>
+                                                    <span class="card-role">DIRETOR COMERCIAL</span>
+                                                </div>
+                                                
+                                                <div class="card-divider"></div>
+                                                
+                                                <div class="card-contacts">
+                                                    <div class="contact-line">
+                                                        <i class="fa-brands fa-whatsapp contact-icon"></i>
+                                                        <span class="contact-label">TEL //</span>
+                                                        <span class="contact-value">+55 (11) 99999-9999</span>
+                                                    </div>
+                                                    <div class="contact-line">
+                                                        <i class="fa-solid fa-envelope contact-icon"></i>
+                                                        <span class="contact-label">EMAIL //</span>
+                                                        <span class="contact-value">rafael@rmsobras.com.br</span>
+                                                    </div>
+                                                    <div class="contact-line">
+                                                        <i class="fa-solid fa-globe contact-icon"></i>
+                                                        <span class="contact-label">WEB //</span>
+                                                        <span class="contact-value">www.rmsobras.com.br</span>
+                                                    </div>
+                                                    <div class="contact-line">
+                                                        <i class="fa-solid fa-location-dot contact-icon"></i>
+                                                        <span class="contact-label">LOC //</span>
+                                                        <span class="contact-value">Sorocaba - SP</span>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="card-meta-row">
+                                                    <span class="card-id">RM-DIR-01</span>
+                                                    <i class="fa-solid fa-microchip card-chip-icon"></i>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Coluna Direita: Mapa Delineado -->
+                                            <div class="card-back-right">
+                                                <!-- SVG Mapa Delineado e Pontilhado -->
+                                                <svg class="card-world-map" viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
+                                                    <defs>
+                                                        <pattern id="dot-pattern" width="3" height="3" patternUnits="userSpaceOnUse">
+                                                            <circle cx="1.2" cy="1.2" r="0.6" fill="rgba(0, 166, 81, 0.18)" />
+                                                        </pattern>
+                                                    </defs>
+                                                    <!-- North America -->
+                                                    <path d="M 5,10 C 12,8 20,10 25,18 C 22,22 18,18 15,20 C 10,22 12,28 5,30 Z" fill="url(#dot-pattern)" />
+                                                    <!-- South America -->
+                                                    <path d="M 22,30 C 25,28 28,30 27,35 C 25,40 22,46 20,49 C 19,46 18,40 20,35 Z" fill="url(#dot-pattern)" />
+                                                    <!-- Eurasia / Africa -->
+                                                    <path d="M 40,12 C 50,5 70,5 80,10 C 85,16 90,12 90,20 C 80,25 75,20 70,26 C 65,24 60,28 55,26 C 50,24 45,18 40,12 Z" fill="url(#dot-pattern)" />
+                                                    <path d="M 40,24 C 45,22 50,24 50,28 C 48,32 44,38 43,41 C 41,38 38,32 40,28 Z" fill="url(#dot-pattern)" />
+                                                    <!-- Australia -->
+                                                    <path d="M 75,34 C 80,32 85,34 83,38 C 80,41 75,38 75,34 Z" fill="url(#dot-pattern)" />
+                                                </svg>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1011,11 +1384,11 @@
 
                     <!-- Meta e Google Ads Banner Simulator -->
                     <div class="card-branding-info w-full mt-40">
-                        <h2 class="card-brand-title"><i class="fa-solid fa-rectangle-ad text-green"></i> Simulador de Campanhas Paid Media (Google & Meta Ads)</h2>
+                        <h2 class="card-brand-title"><i class="fa-solid fa-rectangle-ad text-green"></i> Simulador de Campanhas de Mídia Paga (Google & Meta Ads)</h2>
                         <div class="grid grid-2 gap-40 mt-30">
                             <!-- Google Search Ad -->
                             <div class="ad-card-preview google">
-                                <div class="ad-meta-top"><i class="fa-solid fa-magnifying-glass"></i> Google Ads - Pesquisa Sponsorizada</div>
+                                <div class="ad-meta-top"><i class="fa-solid fa-magnifying-glass"></i> Google Ads - Pesquisa Patrocinada</div>
                                 <div class="google-ad-content">
                                     <span class="google-url">https://www.rmsobras.com.br/compramos-equipamentos</span>
                                     <h3 class="google-title">Compramos Transformadores e Motores Industriais - Avaliação Rápida</h3>
@@ -1030,7 +1403,7 @@
 
                             <!-- Meta Banner Ad -->
                             <div class="ad-card-preview meta-ad">
-                                <div class="ad-meta-top"><i class="fa-brands fa-facebook"></i> Facebook & Meta Sponsored Banner</div>
+                                <div class="ad-meta-top"><i class="fa-brands fa-facebook"></i> Facebook & Meta - Banner Patrocinado</div>
                                 <div class="meta-ad-card">
                                     <div class="meta-header">
                                         <img src="assets/rm_industrial_logo.png" alt="RM Logo" class="meta-avatar">
