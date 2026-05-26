@@ -2411,22 +2411,53 @@ img {
 }
 
 @media (max-width: 768px) {
-    body { padding-top: 100px; } /* Switcher grows in 2 lines */
+    body { padding-top: 130px !important; }
+    body.view-branding-active { padding-top: 60px !important; }
     
     #prototype-switcher {
-        height: auto;
-        padding: 10px 0;
+        height: 60px !important;
+        padding: 0 !important;
     }
     
     .switcher-container {
-        flex-direction: column;
-        gap: 8px;
+        flex-direction: row !important;
         align-items: center;
-        text-align: center;
+        justify-content: center;
+        height: 100%;
+        gap: 0 !important;
+    }
+    
+    .switcher-main-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .switcher-title, .switcher-badge {
+        display: none !important;
+    }
+    
+    .switcher-buttons {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .switcher-btn {
+        padding: 5px 12px !important;
+        font-size: 11px !important;
     }
     
     .main-header {
-        top: 86px; /* Ajuste para o switcher maior */
+        top: 60px !important;
+        height: 70px !important;
+    }
+    
+    .main-header.scrolled {
+        top: 60px !important;
+        height: 60px !important;
     }
     
     .grid-2 { grid-template-columns: 1fr; }
@@ -2443,6 +2474,10 @@ img {
     .gap-60 { gap: 30px; }
     .gap-40 { gap: 20px; }
     
+    .card-branding-info, .details-box {
+        padding: 20px !important;
+    }
+    
     .mobile-nav-toggle {
         display: block;
     }
@@ -2454,10 +2489,12 @@ img {
         width: 100%;
         background-color: var(--color-black);
         flex-direction: column;
-        padding: 30px;
+        padding: 24px;
         border-bottom: 2px solid var(--color-green);
         display: none;
         z-index: 99;
+        max-height: calc(100vh - 130px);
+        overflow-y: auto;
     }
     
     .nav-menu.active {
@@ -2517,14 +2554,27 @@ img {
     }
     
     .branding-tabs-nav {
-        position: static;
-        top: auto;
-        flex-wrap: wrap;
+        display: flex !important;
+        justify-content: flex-start !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        -webkit-overflow-scrolling: touch !important;
+        position: sticky !important;
+        top: 60px !important;
+        z-index: 100;
+        flex-wrap: nowrap !important;
+        padding: 5px 15px !important;
+        scrollbar-width: none; /* Hide scrollbars */
+    }
+    .branding-tabs-nav::-webkit-scrollbar {
+        display: none;
     }
     
     .brand-tab-btn {
-        padding: 12px 15px;
-        font-size: 12px;
+        flex: 0 0 auto !important;
+        padding: 12px 16px !important;
+        font-size: 13px !important;
+        border-bottom: 3px solid transparent;
     }
     
     .instagram-feed-grid {
@@ -2547,6 +2597,9 @@ img {
 }
 
 @media (max-width: 480px) {
+    body { padding-top: 120px !important; }
+    body.view-branding-active { padding-top: 60px !important; }
+    
     .stats-grid {
         grid-template-columns: 1fr;
     }
@@ -2564,7 +2617,32 @@ img {
     .hero-title { font-size: 28px; }
     
     .main-header {
-        top: 100px; /* Ajuste mobile extra */
+        top: 60px !important;
+        height: 60px !important;
+    }
+    
+    .main-header.scrolled {
+        top: 60px !important;
+        height: 60px !important;
+    }
+    
+    .header-logo {
+        height: 38px;
+    }
+    .brand-name {
+        font-size: 15px;
+    }
+    .brand-sub {
+        font-size: 9px;
+    }
+    
+    .text-post-placeholder {
+        padding: 12px !important;
+    }
+    
+    .text-post-placeholder strong {
+        font-size: 10px !important;
+        line-height: 1.3;
     }
 }
 
@@ -3351,16 +3429,88 @@ body.loaded .boot-loader {
     pointer-events: auto;
 }
 
-/* Pause other orbits when one orbit item is hovered */
-.sustain-solar-system:hover .orbit-ring {
-    animation-play-state: paused;
+/* Pause other orbits when one orbit item is hovered or selected */
+.sustain-solar-system:hover .orbit-ring,
+.sustain-solar-system.paused .orbit-ring {
+    animation-play-state: paused !important;
 }
-.sustain-solar-system:hover .orbit-item {
-    animation-play-state: paused;
+.sustain-solar-system:hover .orbit-item,
+.sustain-solar-system.paused .orbit-item {
+    animation-play-state: paused !important;
 }
 
-/* E. MOBILE DESENSITIZATION */
+/* E. MOBILE DESENSITIZATION & ORBIT PANEL */
+.orbit-details-mobile {
+    display: none;
+    margin-top: 30px;
+    background-color: rgba(17, 24, 39, 0.4);
+    border: 1px dashed rgba(0, 166, 81, 0.3);
+    border-radius: var(--border-radius);
+    padding: 16px 20px;
+    font-family: var(--font-tech);
+    text-align: left;
+    min-height: 80px;
+    transition: var(--transition);
+}
+
+.orbit-details-placeholder {
+    font-size: 11px;
+    color: var(--color-gray-light);
+    text-align: center;
+    line-height: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mobile-detail-card h4 {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--color-green);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 6px;
+}
+
+.mobile-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+.mobile-detail-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.03);
+    padding-bottom: 4px;
+}
+
+.mobile-detail-row .lbl {
+    color: rgba(255, 255, 255, 0.45);
+    text-transform: uppercase;
+}
+
+.mobile-detail-row .val {
+    color: var(--color-white);
+    font-weight: 700;
+}
+
+.mobile-detail-full {
+    font-size: 11px;
+    color: var(--color-concrete);
+    margin: 0;
+}
+
 @media (max-width: 991px) {
+    .orbit-details-mobile {
+        display: block;
+        animation: fadeIn 0.4s ease-out forwards;
+    }
     .hud-footer {
         display: none;
     }

@@ -427,13 +427,15 @@ function initCanvasBackground() {
             if (this.x < 0 || this.x > width) this.vx *= -1;
             if (this.y < 0 || this.y > height) this.vy *= -1;
             
-            // Mouse gravity attraction
-            let dx = mousePos.x - this.x;
-            let dy = mousePos.y - this.y;
-            let dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 120) {
-                this.x += dx * 0.005;
-                this.y += dy * 0.005;
+            // Mouse gravity attraction (only on pointer devices to save mobile CPU)
+            if (!window.matchMedia('(hover: none)').matches) {
+                let dx = mousePos.x - this.x;
+                let dy = mousePos.y - this.y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 120) {
+                    this.x += dx * 0.005;
+                    this.y += dy * 0.005;
+                }
             }
         }
         
@@ -445,8 +447,9 @@ function initCanvasBackground() {
         }
     }
     
-    // Spawn particles based on screen area
-    const count = Math.min(Math.floor((width * height) / 13000), 100);
+    // Spawn particles based on screen area (reduced on mobile/tablet for performance)
+    const isMobile = window.matchMedia('(hover: none)').matches || window.innerWidth < 768;
+    const count = isMobile ? 15 : Math.min(Math.floor((width * height) / 13000), 100);
     for (let i = 0; i < count; i++) {
         particles.push(new Particle());
     }
@@ -701,22 +704,67 @@ function initCADScanner() {
 /* 15. SOLAR SYSTEM ORBITS INTERACTIVITY DETAILS */
 function initSolarSystemDetails() {
     const items = document.querySelectorAll('.orbit-item');
+    const mobilePanel = document.getElementById('orbit-details-mobile');
+    const solarSystem = document.querySelector('.sustain-solar-system');
     if (items.length === 0) return;
     
     items.forEach(item => {
         item.addEventListener('click', (e) => {
-            // Touch screens details helper
-            if (window.innerWidth > 991) return; // Managed by hover on desktop
-            
-            const isActive = item.classList.contains('active-touch');
-            items.forEach(i => i.classList.remove('active-touch'));
-            
-            if (!isActive) {
-                item.classList.add('active-touch');
-                // Auto close details card after 4 seconds
-                setTimeout(() => {
-                    item.classList.remove('active-touch');
-                }, 4000);
+            if (window.innerWidth <= 991) {
+                e.stopPropagation();
+                
+                const h4 = item.querySelector('.orbit-hud-card h4');
+                const paragraphs = item.querySelectorAll('.orbit-hud-card p');
+                
+                if (mobilePanel && h4) {
+                    let htmlContent = `
+                        <div class="mobile-detail-card">
+                            <h4><i class="fa-solid fa-recycle text-green animate-pulse"></i> ${h4.innerHTML}</h4>
+                            <div class="mobile-detail-grid">
+                    `;
+                    
+                    paragraphs.forEach(p => {
+                        const text = p.innerHTML;
+                        const parts = text.split(':');
+                        if (parts.length === 2) {
+                            htmlContent += `
+                                <div class="mobile-detail-row">
+                                    <span class="lbl">${parts[0].trim()}:</span>
+                                    <span class="val">${parts[1].trim()}</span>
+                                </div>
+                            `;
+                        } else {
+                            htmlContent += `<p class="mobile-detail-full">${text}</p>`;
+                        }
+                    });
+                    
+                    htmlContent += `
+                            </div>
+                        </div>
+                    `;
+                    
+                    mobilePanel.innerHTML = htmlContent;
+                    mobilePanel.classList.add('active');
+                }
+                
+                // Toggle active-touch class
+                const isActive = item.classList.contains('active-touch');
+                items.forEach(i => i.classList.remove('active-touch'));
+                
+                if (!isActive) {
+                    item.classList.add('active-touch');
+                    if (solarSystem) {
+                        solarSystem.classList.add('paused');
+                    }
+                } else {
+                    if (solarSystem) {
+                        solarSystem.classList.remove('paused');
+                    }
+                    if (mobilePanel) {
+                        mobilePanel.classList.remove('active');
+                        mobilePanel.innerHTML = '<div class="orbit-details-placeholder">// Toque em um item da órbita para ver detalhes técnicos</div>';
+                    }
+                }
             }
         });
         
@@ -738,6 +786,20 @@ function initSolarSystemDetails() {
             }
         });
     });
+
+    // Tap on empty space resets rotation on mobile
+    if (solarSystem) {
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 991 && !e.target.closest('.orbit-item')) {
+                solarSystem.classList.remove('paused');
+                items.forEach(i => i.classList.remove('active-touch'));
+                if (mobilePanel) {
+                    mobilePanel.classList.remove('active');
+                    mobilePanel.innerHTML = '<div class="orbit-details-placeholder">// Toque em um item da órbita para ver detalhes técnicos</div>';
+                }
+            }
+        });
+    }
 }
 
 /* 16. SYSTEM LOGS TERMINAL FEEDBACK */
