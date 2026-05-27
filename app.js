@@ -117,7 +117,7 @@ function initScrollspy() {
     window.addEventListener('scroll', () => {
         let currentSection = '';
         sections.forEach(section => {
-            const sectionTop = section.offsetTop - 160;
+            const sectionTop = section.offsetTop - 90; // Adjusted for header height (75px) + offset buffer
             const sectionHeight = section.offsetHeight;
             if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
                 currentSection = section.getAttribute('id');
@@ -146,14 +146,12 @@ function initSmoothScrolling() {
             if (targetEl) {
                 e.preventDefault();
                 
-                // Cálculo dinâmico das alturas dos cabeçalhos fixos
-                const switcher = document.getElementById('prototype-switcher');
+                // Cálculo dinâmico das alturas dos cabeçalhos fixos (apenas header no topo)
                 const header = document.querySelector('.main-header');
-                const switcherHeight = switcher ? switcher.offsetHeight : 0;
                 const headerHeight = header ? header.offsetHeight : 0;
                 
                 // Calcula o offset exato com 15px de respiro
-                const offsetPosition = targetEl.offsetTop - (switcherHeight + headerHeight + 15);
+                const offsetPosition = targetEl.offsetTop - (headerHeight + 15);
                 
                 window.scrollTo({
                     top: offsetPosition,
