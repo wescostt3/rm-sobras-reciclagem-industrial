@@ -77,7 +77,7 @@ function initHeaderScroll() {
         } else {
             header.classList.remove('scrolled');
         }
-    });
+    }, { passive: true });
 }
 
 /* 4. MOBILE NAVIGATION TOGGLE */
@@ -132,7 +132,7 @@ function initScrollspy() {
                 }
             });
         }
-    });
+    }, { passive: true });
 }
 
 /* 6. SMOOTH ANCHOR SCROLLING */
@@ -536,7 +536,7 @@ function initHUDTracking() {
             debugScroll.textContent = `${Math.round(scrollTop)}px`;
             debugScrollPct.textContent = `${scrollPct}%`;
         }
-    });
+    }, { passive: true });
     
     // Timer log tracker
     function updateHUDTimer() {

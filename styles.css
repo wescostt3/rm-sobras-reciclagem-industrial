@@ -2644,6 +2644,14 @@ img {
         grid-template-columns: 1fr;
     }
     
+    .card-back-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0 !important;
+    }
+    .card-back-right {
+        display: none !important;
+    }
+    
     .cta-title { font-size: 32px; }
     
     .hero-title { font-size: 28px; }
