@@ -3672,6 +3672,13 @@ body.loaded .boot-loader {
     .model-layers {
         display: none !important;
     }
+    .sustain-graphic-wrapper {
+        flex-direction: column;
+    }
+    .whatsapp-fixed-btn {
+        bottom: 100px;
+        right: 20px;
+    }
 }
 
 /* F. 3D HOLOGRAPHIC SLICES EXPLOSION */
