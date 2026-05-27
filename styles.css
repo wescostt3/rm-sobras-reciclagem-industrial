@@ -39,11 +39,11 @@ body {
     font-size: 16px;
     line-height: 1.6;
     overflow-x: hidden;
-    padding-top: 190px; /* Switcher offset (110px switcher + 80px header) */
+    padding-top: 155px; /* Switcher offset (60px switcher + 95px header) */
 }
 
 body.view-branding-active {
-    padding-top: 110px; /* Switcher offset only (no main header in branding view) */
+    padding-top: 60px; /* Switcher offset only (no main header in branding view) */
 }
 
 a {
@@ -218,13 +218,12 @@ img {
     top: 0;
     left: 0;
     width: 100%;
-    height: 110px;
+    height: 60px;
     background-color: var(--color-black);
     border-bottom: 2px solid var(--color-green);
     z-index: 10000;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-items: center;
 }
 
 .switcher-container {
@@ -233,22 +232,25 @@ img {
     margin: 0 auto;
     padding: 0 24px;
     display: flex;
-    flex-direction: column;
-    gap: 8px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
 }
 .switcher-main-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    width: 100%;
+    gap: 15px;
+    width: auto;
 }
 .switcher-ticker-row {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding-top: 4px;
+    width: auto;
+    border-top: none;
+    padding-top: 0;
 }
 
 .switcher-title {
@@ -329,22 +331,22 @@ img {
    ========================================================================= */
 .main-header {
     position: fixed;
-    top: 110px; /* Switcher offset */
+    top: 60px; /* Switcher offset */
     left: 0;
     width: 100%;
     background-color: rgba(17, 24, 39, 0.9);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     z-index: 999;
-    height: 80px;
+    height: 95px;
     display: flex;
     align-items: center;
     transition: var(--transition);
 }
 
 .main-header.scrolled {
-    top: 110px;
-    height: 70px;
+    top: 60px;
+    height: 80px;
     background-color: var(--color-black);
     box-shadow: 0 5px 20px rgba(0,0,0,0.5);
 }
@@ -366,9 +368,14 @@ img {
 }
 
 .header-logo {
-    height: 48px;
+    height: 56px;
     width: auto;
     filter: drop-shadow(0 0 4px rgba(0, 166, 81, 0.2));
+    transition: var(--transition);
+}
+
+.main-header.scrolled .header-logo {
+    height: 48px;
 }
 
 .logo-text {
@@ -1454,7 +1461,7 @@ img {
     background-color: var(--color-charcoal-light);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     position: sticky;
-    top: 110px; /* Switcher (110px) - No header in branding view */
+    top: 60px; /* Switcher (60px) - No header in branding view */
     z-index: 100;
 }
 
@@ -2408,6 +2415,21 @@ img {
         position: static;
         top: auto;
     }
+    .main-header {
+        height: 80px;
+    }
+    .header-logo {
+        height: 46px;
+    }
+    .brand-name {
+        font-size: 16px;
+    }
+    .nav-menu {
+        gap: 15px;
+    }
+    .nav-link {
+        font-size: 13px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -2579,6 +2601,16 @@ img {
     
     .instagram-feed-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+    .differentials-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+    .service-card {
+        padding: 25px 20px !important;
+    }
+    .equip-card {
+        padding: 20px 16px !important;
     }
 }
 
@@ -3311,9 +3343,10 @@ body.loaded .boot-loader {
 
 .solar-center-logo {
     position: absolute;
-    width: 90px;
-    height: 90px;
-    background-color: var(--color-black);
+    width: 100px;
+    height: 100px;
+    background-color: rgba(5, 5, 5, 0.45);
+    backdrop-filter: blur(5px);
     border: 2px solid var(--color-green);
     border-radius: 50%;
     z-index: 10;
@@ -3321,10 +3354,12 @@ body.loaded .boot-loader {
     align-items: center;
     justify-content: center;
     box-shadow: 0 0 25px rgba(0, 166, 81, 0.35);
+    overflow: hidden;
 }
 .solar-center-logo img {
-    height: 52px;
-    width: auto;
+    width: 85%;
+    height: 85%;
+    object-fit: contain;
 }
 
 /* Orbit Rings */

@@ -117,7 +117,7 @@ function initScrollspy() {
     window.addEventListener('scroll', () => {
         let currentSection = '';
         sections.forEach(section => {
-            const sectionTop = section.offsetTop - 120;
+            const sectionTop = section.offsetTop - 160;
             const sectionHeight = section.offsetHeight;
             if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
                 currentSection = section.getAttribute('id');
