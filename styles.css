@@ -2914,8 +2914,8 @@ body.loaded .boot-loader {
 /* 5. HUD DEBUG PANEL */
 .hud-debug {
     position: fixed;
-    bottom: 30px;
-    right: 35px;
+    bottom: 75px;
+    left: 35px;
     width: 170px;
     background-color: rgba(5, 5, 5, 0.7);
     backdrop-filter: blur(15px);
