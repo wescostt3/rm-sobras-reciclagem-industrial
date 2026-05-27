@@ -3342,10 +3342,39 @@ body.loaded .boot-loader {
 }
 
 /* D. CIRCULAR ECONOMY ORBIT SYSTEM */
+/* Layout Alignment and Spacing for Sustainability Section */
+@media (min-width: 1300px) {
+    .sustainability-section .grid-2 {
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 90px;
+    }
+    .sustain-content {
+        margin-left: -70px;
+    }
+}
+@media (min-width: 1200px) and (max-width: 1299px) {
+    .sustainability-section .grid-2 {
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 80px;
+    }
+    .sustain-content {
+        margin-left: -40px;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+    .sustainability-section .grid-2 {
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+    }
+    .sustain-content {
+        margin-left: -15px;
+    }
+}
+
 .sustain-solar-system {
     position: relative;
-    width: 440px;
-    height: 440px;
+    width: 520px;
+    height: 520px;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -3354,8 +3383,8 @@ body.loaded .boot-loader {
 
 .solar-center-logo {
     position: absolute;
-    width: 100px;
-    height: 100px;
+    width: 135px;
+    height: 135px;
     background-color: rgba(5, 5, 5, 0.45);
     backdrop-filter: blur(5px);
     border: 2px solid var(--color-green);
@@ -3381,7 +3410,6 @@ body.loaded .boot-loader {
     display: flex;
     align-items: center;
     justify-content: center;
-    animation: rotateOrbit linear infinite;
     pointer-events: none; /* Let pointer hover the items directly */
 }
 .orbit-ring:hover {
@@ -3391,12 +3419,46 @@ body.loaded .boot-loader {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
+@keyframes rotateOrbitCcw {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+}
 
-.ring-1 { width: 170px; height: 170px; animation-duration: 12s; z-index: 5; }
-.ring-2 { width: 235px; height: 235px; animation-duration: 16s; z-index: 4; }
-.ring-3 { width: 300px; height: 300px; animation-duration: 20s; z-index: 3; }
-.ring-4 { width: 365px; height: 365px; animation-duration: 24s; z-index: 2; }
-.ring-5 { width: 430px; height: 430px; animation-duration: 28s; z-index: 1; }
+.ring-1 { 
+    width: 210px; 
+    height: 210px; 
+    animation: rotateOrbit 12s linear infinite; 
+    animation-delay: -2s;
+    z-index: 5; 
+}
+.ring-2 { 
+    width: 285px; 
+    height: 285px; 
+    animation: rotateOrbitCcw 16s linear infinite; 
+    animation-delay: -5s;
+    z-index: 4; 
+}
+.ring-3 { 
+    width: 360px; 
+    height: 360px; 
+    animation: rotateOrbit 20s linear infinite; 
+    animation-delay: -9s;
+    z-index: 3; 
+}
+.ring-4 { 
+    width: 435px; 
+    height: 435px; 
+    animation: rotateOrbitCcw 24s linear infinite; 
+    animation-delay: -14s;
+    z-index: 2; 
+}
+.ring-5 { 
+    width: 510px; 
+    height: 510px; 
+    animation: rotateOrbit 28s linear infinite; 
+    animation-delay: -20s;
+    z-index: 1; 
+}
 
 /* Orbit Items (Planets) */
 .orbit-item {
@@ -3414,8 +3476,6 @@ body.loaded .boot-loader {
     cursor: pointer;
     pointer-events: auto; /* Enable hover on items */
     transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s, border-color 0.3s, color 0.3s;
-    /* Cancel parent rotation to keep icons upright */
-    animation: counterRotate linear infinite;
 }
 .orbit-item:hover {
     transform: scale(1.3);
@@ -3428,12 +3488,41 @@ body.loaded .boot-loader {
     from { transform: rotate(360deg); }
     to { transform: rotate(0deg); }
 }
-/* Bind counterRotate duration to match ring duration */
-.ring-1 .orbit-item { top: -16px; left: calc(50% - 16px); animation-duration: 12s; }
-.ring-2 .orbit-item { top: -16px; left: calc(50% - 16px); animation-duration: 16s; }
-.ring-3 .orbit-item { top: -16px; left: calc(50% - 16px); animation-duration: 20s; }
-.ring-4 .orbit-item { top: -16px; left: calc(50% - 16px); animation-duration: 24s; }
-.ring-5 .orbit-item { top: -16px; left: calc(50% - 16px); animation-duration: 28s; }
+@keyframes counterRotateCcw {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+/* Bind counterRotate/counterRotateCcw duration and delay to match ring */
+.ring-1 .orbit-item { 
+    top: -16px; 
+    left: calc(50% - 16px); 
+    animation: counterRotate 12s linear infinite; 
+    animation-delay: -2s;
+}
+.ring-2 .orbit-item { 
+    top: -16px; 
+    left: calc(50% - 16px); 
+    animation: counterRotateCcw 16s linear infinite; 
+    animation-delay: -5s;
+}
+.ring-3 .orbit-item { 
+    top: -16px; 
+    left: calc(50% - 16px); 
+    animation: counterRotate 20s linear infinite; 
+    animation-delay: -9s;
+}
+.ring-4 .orbit-item { 
+    top: -16px; 
+    left: calc(50% - 16px); 
+    animation: counterRotateCcw 24s linear infinite; 
+    animation-delay: -14s;
+}
+.ring-5 .orbit-item { 
+    top: -16px; 
+    left: calc(50% - 16px); 
+    animation: counterRotate 28s linear infinite; 
+    animation-delay: -20s;
+}
 
 /* Orbit HUD details cards on hover */
 .orbit-hud-card {
@@ -3564,10 +3653,14 @@ body.loaded .boot-loader {
         width: 300px;
         height: 300px;
     }
-    .ring-1 { width: 110px; height: 110px; }
-    .ring-2 { width: 155px; height: 155px; }
-    .ring-3 { width: 200px; height: 200px; }
-    .ring-4 { width: 245px; height: 245px; }
+    .solar-center-logo {
+        width: 80px;
+        height: 80px;
+    }
+    .ring-1 { width: 120px; height: 120px; }
+    .ring-2 { width: 162.5px; height: 162.5px; }
+    .ring-3 { width: 205px; height: 205px; }
+    .ring-4 { width: 247.5px; height: 247.5px; }
     .ring-5 { width: 290px; height: 290px; }
     .orbit-hud-card {
         display: none !important; /* Hide overlay cards on mobile */
