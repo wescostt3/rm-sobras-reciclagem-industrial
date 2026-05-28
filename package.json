@@ -16,6 +16,6 @@
   "license": "ISC",
   "dependencies": {
     "@splinetool/loader": "^1.12.95",
-    "three": "^0.184.0"
+    "three": "^0.158.0"
   }
 }
