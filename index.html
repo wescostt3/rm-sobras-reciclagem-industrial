@@ -16,6 +16,16 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/logos/logo-transparent-light-text.png">
     <link rel="icon" type="image/svg+xml" href="assets/logos/logo-transparent-light.svg">
+    <!-- Import Map for Three.js and SplineLoader -->
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "./node_modules/three/build/three.module.js",
+        "three/examples/jsm/controls/OrbitControls.js": "./node_modules/three/examples/jsm/controls/OrbitControls.js",
+        "@splinetool/loader": "./node_modules/@splinetool/loader/build/SplineLoader.js"
+      }
+    }
+    </script>
 </head>
 <body>
 
@@ -160,7 +170,7 @@
 
             <!-- HERO PRINCIPAL -->
             <section id="inicio" class="hero-section" style="background-image: linear-gradient(180deg, rgba(17, 24, 39, 0.85) 0%, rgba(17, 24, 39, 0.95) 100%), url('assets/images/industrial_hero_bg.png');">
-                <div class="container hero-content">
+                <div class="container hero-content hero-grid-split">
                     <div class="hero-text-block">
                         <div class="hero-tag"><i class="fa-solid fa-industry"></i> Negociação e Sustentabilidade de Ativos</div>
                         <h1 class="hero-title">
@@ -178,6 +188,7 @@
                             </a>
                         </div>
                     </div>
+                    <div id="hero-spline-3d"></div>
                 </div>
 
                 <!-- Faixa de Indicadores Rápida -->
@@ -1437,6 +1448,6 @@
     </main>
 
     <!-- Custom JS -->
-    <script src="app.js"></script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>

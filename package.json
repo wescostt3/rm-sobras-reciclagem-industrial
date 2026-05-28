@@ -13,5 +13,9 @@
     "equipamentos-industriais"
   ],
   "author": "Agência Premium UI/UX",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@splinetool/loader": "^1.12.95",
+    "three": "^0.184.0"
+  }
 }
