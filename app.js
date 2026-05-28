@@ -554,10 +554,6 @@ function initMetalsTicker() {
     
     if (!tickerTrack || tickerItems.length === 0) return;
     
-    // Duplicate items in javascript to guarantee infinite scrolling width
-    let itemsHTML = tickerTrack.innerHTML;
-    tickerTrack.innerHTML += itemsHTML; // Double the items for infinite sliding
-    
     // Live fluctuations interval
     setInterval(() => {
         // Randomly pick one of the active commodities (0 to 3)

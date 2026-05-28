@@ -39,7 +39,7 @@ body {
     font-size: 16px;
     line-height: 1.6;
     overflow-x: hidden;
-    padding-top: 75px; /* Header height only */
+    padding-top: 113px; /* Header height (75px) + top ticker (38px) */
     padding-bottom: 45px; /* Switcher offset at bottom */
 }
 
@@ -340,8 +340,9 @@ img {
     backdrop-filter: blur(12px) !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     z-index: 999;
-    height: 75px;
+    height: 113px; /* Top ticker (38px) + header-container (75px) */
     display: flex;
+    flex-direction: column;
     align-items: center;
     transition: var(--transition);
 }
@@ -354,14 +355,57 @@ img {
     backdrop-filter: blur(12px) !important;
 }
 
+.main-header.scrolled .header-top-ticker {
+    display: none;
+}
+
 .header-container {
     width: 100%;
+    height: 75px;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: var(--transition);
+}
+
+.main-header.scrolled .header-container {
+    height: 65px;
+}
+
+/* Header Top Ticker styling */
+.header-top-ticker {
+    width: 100%;
+    height: 38px;
+    background-color: var(--color-black);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.header-top-ticker .metals-ticker {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    border: none;
+    height: 100%;
+    overflow: visible;
+}
+
+.header-top-ticker .ticker-track {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+    animation: none;
+    width: auto;
+    margin-left: 40px;
+    gap: 0;
 }
 
 .logo-area {
@@ -2409,7 +2453,7 @@ img {
 /* =========================================================================
    3. RESPONSIVE DESIGN & MEDIA QUERIES
    ========================================================================= */
-@media (max-width: 1024px) {
+@media (max-width: 991px) {
     body { padding-top: 70px; }
     .grid-4 { grid-template-columns: repeat(2, 1fr); }
     .grid-3 { grid-template-columns: repeat(2, 1fr); }
@@ -3051,7 +3095,7 @@ body.loaded .boot-loader {
 
 /* Responsive adjustments */
 @media (max-width: 991px) {
-    .metals-ticker, .switcher-ticker-row {
+    .metals-ticker, .switcher-ticker-row, .header-top-ticker {
         display: none !important;
     }
     #custom-cursor {
