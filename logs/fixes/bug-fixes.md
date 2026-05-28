@@ -38,3 +38,11 @@ This document logs all corrections applied to the mobile responsiveness of the *
 * **Symptoms**: The text card inside the 2-column Instagram feed on mobile overflowed its bounds due to a large font size and large padding inside a small square box.
 * **Resolution**:
   - Reduced padding to `12px` and font-size of headings to `10px` on viewports under 480px.
+
+## [FIX-006] Mobile Header Spacing Gap (Vão Preto)
+* **Type**: Layout / Spacing
+* **Symptoms**: A black vertical layout gap was visible below or above the header on certain mobile viewports. This was caused by the body's `padding-top` remaining hardcoded at `70px` (from tablet media queries) even when the viewport shrunk to mobile size (<480px), where the header's height is reduced to `60px`.
+* **Resolution**:
+  - Adjusted `body` padding-top under `@media (max-width: 480px)` to `60px !important` to align perfectly with the `60px` header height.
+  - Adjusted `body` padding-top under `@media (max-width: 1024px)` to `70px` to align perfectly with the `70px` header height on portrait tablets and narrow screens.
+

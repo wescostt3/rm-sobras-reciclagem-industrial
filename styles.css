@@ -2410,6 +2410,7 @@ img {
    3. RESPONSIVE DESIGN & MEDIA QUERIES
    ========================================================================= */
 @media (max-width: 1024px) {
+    body { padding-top: 70px; }
     .grid-4 { grid-template-columns: repeat(2, 1fr); }
     .grid-3 { grid-template-columns: repeat(2, 1fr); }
     .hero-title { font-size: 44px; }
@@ -2632,7 +2633,7 @@ img {
 }
 
 @media (max-width: 480px) {
-    body { padding-top: 70px !important; }
+    body { padding-top: 60px !important; }
     body.view-branding-active { padding-top: 0 !important; }
     
     .stats-grid {
