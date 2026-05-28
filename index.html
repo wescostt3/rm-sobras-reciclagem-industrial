@@ -160,7 +160,7 @@
 
             <!-- HERO PRINCIPAL -->
             <section id="inicio" class="hero-section" style="background-image: linear-gradient(180deg, rgba(17, 24, 39, 0.85) 0%, rgba(17, 24, 39, 0.95) 100%), url('assets/images/industrial_hero_bg.png');">
-                <div class="container hero-content hero-grid-split">
+                <div class="container hero-content">
                     <div class="hero-text-block">
                         <div class="hero-tag"><i class="fa-solid fa-industry"></i> Negociação e Sustentabilidade de Ativos</div>
                         <h1 class="hero-title">
@@ -176,157 +176,6 @@
                             <a href="#servicos" class="btn btn-outline btn-lg">
                                 <i class="fa-solid fa-gears"></i> Conhecer serviços
                             </a>
-                        </div>
-                    </div>
-
-                    <!-- Holographic CAD Scanner -->
-                    <div class="hero-scanner-hud" id="hero-scanner-hud">
-                        <div class="scanner-header">
-                            <button class="scanner-tab active" data-asset="transformer">
-                                <i class="fa-solid fa-bolt"></i> [01] TRANSF.04
-                            </button>
-                            <button class="scanner-tab" data-asset="motor">
-                                <i class="fa-solid fa-charging-station"></i> [02] MOTOR.12
-                            </button>
-                            <button class="scanner-tab" data-asset="chiller">
-                                <i class="fa-solid fa-snowflake"></i> [03] CHILLER.09
-                            </button>
-                        </div>
-                        
-                        <div class="scanner-viewport">
-                            <div class="scan-grid-lines"></div>
-                            <div class="scan-line"></div>
-                            
-                            <!-- 3D Holographic Model Layered Slices -->
-                            <div class="model-layers active" id="layers-transformer">
-                                <div class="model-layer layer-back" style="background-image: url('assets/images/transformer_3d.png');"></div>
-                                <div class="model-layer layer-center" style="background-image: url('assets/images/transformer_3d.png');"></div>
-                                <div class="model-layer layer-front" style="background-image: url('assets/images/transformer_3d.png');"></div>
-                            </div>
-                            
-                            <div class="model-layers" id="layers-motor">
-                                <div class="model-layer layer-back" style="background-image: url('assets/images/motor_3d.png');"></div>
-                                <div class="model-layer layer-center" style="background-image: url('assets/images/motor_3d.png');"></div>
-                                <div class="model-layer layer-front" style="background-image: url('assets/images/motor_3d.png');"></div>
-                            </div>
-                            
-                            <div class="model-layers" id="layers-chiller">
-                                <div class="model-layer layer-back" style="background-image: url('assets/images/chiller_3d.png');"></div>
-                                <div class="model-layer layer-center" style="background-image: url('assets/images/chiller_3d.png');"></div>
-                                <div class="model-layer layer-front" style="background-image: url('assets/images/chiller_3d.png');"></div>
-                            </div>
-                            
-                            <!-- Blueprint SVGs -->
-                            <!-- 1. Transformer Blueprint -->
-                            <svg class="blueprint-svg active" id="blueprint-transformer" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Bushings -->
-                                <g class="cad-part part-bushings">
-                                    <line x1="70" y1="12" x2="88" y2="12" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
-                                    <text x="89" y="14" fill="#00A651" font-size="3" font-family="monospace" class="part-text">ISOLADORES</text>
-                                </g>
-                                
-                                <!-- Core -->
-                                <g class="cad-part part-core">
-                                    <line x1="50" y1="50" x2="8" y2="50" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
-                                    <text x="7" y="48" fill="#00A651" font-size="3" font-family="monospace" text-anchor="end" class="part-text">NUCLEO</text>
-                                </g>
-                                
-                                <!-- Coils -->
-                                <g class="cad-part part-coil-left">
-                                    <line x1="38" y1="50" x2="8" y2="62" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
-                                    <text x="7" y="65" fill="#00A651" font-size="3" font-family="monospace" text-anchor="end" class="part-text">BOBINAS</text>
-                                </g>
-                                <g class="cad-part part-coil-right">
-                                </g>
-                                
-                                <!-- Cooling Fins -->
-                                <g class="cad-part part-fins">
-                                    <line x1="78" y1="55" x2="88" y2="55" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
-                                    <text x="89" y="57" fill="#00A651" font-size="3" font-family="monospace" class="part-text">ALETAS</text>
-                                </g>
-                            </svg>
-                            
-                            <!-- 2. Motor Blueprint -->
-                            <svg class="blueprint-svg" id="blueprint-motor" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Junction Box -->
-                                <g class="cad-part part-jbox">
-                                    <line x1="50" y1="13" x2="88" y2="13" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
-                                    <text x="89" y="15" fill="#00A651" font-size="3" font-family="monospace" class="part-text">CONEXAO</text>
-                                </g>
-                                
-                                <!-- Stator / Casing -->
-                                <g class="cad-part part-stator">
-                                    <line x1="45" y1="65" x2="8" y2="65" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
-                                    <text x="7" y="63" fill="#00A651" font-size="3" font-family="monospace" text-anchor="end" class="part-text">ESTATOR</text>
-                                </g>
-                                
-                                <!-- Rotor & Shaft -->
-                                <g class="cad-part part-rotor">
-                                    <line x1="78" y1="48" x2="88" y2="48" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
-                                    <text x="89" y="50" fill="#00A651" font-size="3" font-family="monospace" class="part-text">ROTOR</text>
-                                </g>
-                                
-                                <!-- Cooling Fan -->
-                                <g class="cad-part part-fan">
-                                    <line x1="21" y1="48" x2="8" y2="35" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
-                                    <text x="7" y="33" fill="#00A651" font-size="3" font-family="monospace" text-anchor="end" class="part-text">HELICE</text>
-                                </g>
-                            </svg>
-                            
-                            <!-- 3. Chiller Blueprint -->
-                            <svg class="blueprint-svg" id="blueprint-chiller" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Chiller housing -->
-                                <g class="cad-part part-housing">
-                                    <line x1="15" y1="30" x2="5" y2="15" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
-                                    <text x="5" y="11" fill="#00A651" font-size="3" font-family="monospace" class="part-text">GABINETE</text>
-                                </g>
-                                
-                                <!-- Compressors -->
-                                <g class="cad-part part-compressor-left">
-                                    <line x1="30" y1="45" x2="8" y2="45" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
-                                    <text x="7" y="43" fill="#00A651" font-size="3" font-family="monospace" text-anchor="end" class="part-text">COMPRESSOR</text>
-                                </g>
-                                <g class="cad-part part-compressor-right">
-                                </g>
-                                
-                                <!-- Fan Outlines -->
-                                <g class="cad-part part-chiller-fans">
-                                    <line x1="50" y1="22" x2="88" y2="22" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
-                                    <text x="89" y="24" fill="#00A651" font-size="3" font-family="monospace" class="part-text">EXAUSTOR</text>
-                                </g>
-                                
-                                <!-- Piping Connections -->
-                                <g class="cad-part part-piping">
-                                    <line x1="90" y1="38" x2="90" y2="58" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
-                                    <text x="89" y="63" fill="#00A651" font-size="3" font-family="monospace" class="part-text">FLUXO</text>
-                                </g>
-                            </svg>
-                            
-                            <div class="hud-target-box">
-                                <span class="scan-status">ESCANEANDO [OK]</span>
-                                <span class="scan-target" id="scan-target-id">REF.SIS: TR-004</span>
-                            </div>
-                        </div>
-                        
-                        <div class="scanner-telemetry">
-                            <div class="telemetry-grid">
-                                <div class="tel-item">
-                                    <span class="tel-lbl">TENSÃO</span>
-                                    <span class="tel-val" id="tel-volts">13.8 kV</span>
-                                </div>
-                                <div class="tel-item">
-                                    <span class="tel-lbl">TAXA DE CARGA</span>
-                                    <span class="tel-val" id="tel-load">82.4%</span>
-                                </div>
-                                <div class="tel-item">
-                                    <span class="tel-lbl">TEMP. NÚCLEO</span>
-                                    <span class="tel-val" id="tel-temp">41.2°C</span>
-                                </div>
-                                <div class="tel-item">
-                                    <span class="tel-lbl">FREQUÊNCIA</span>
-                                    <span class="tel-val" id="tel-freq">60.00 Hz</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -765,7 +614,7 @@
 
             <!-- CHAMADA COMERCIAL -->
             <section class="cta-commercial py-120" style="background-image: linear-gradient(90deg, #111827 40%, rgba(17, 24, 39, 0.7) 100%), url('assets/images/brand_storefront.png');">
-                <div class="container">
+                <div class="container cta-grid-split">
                     <div class="cta-comm-box">
                         <span class="cta-tag">Transforme Ativos Parados em Caixa</span>
                         <h2 class="cta-title">Sua empresa tem equipamentos parados ou sobras industriais?</h2>
@@ -777,6 +626,157 @@
                             <a href="https://wa.me/559999999999" class="btn btn-whatsapp btn-lg" target="_blank">
                                 <i class="fa-brands fa-whatsapp"></i> Falar pelo WhatsApp
                             </a>
+                        </div>
+                    </div>
+
+                    <!-- Holographic CAD Scanner -->
+                    <div class="hero-scanner-hud" id="hero-scanner-hud">
+                        <div class="scanner-header">
+                            <button class="scanner-tab active" data-asset="transformer">
+                                <i class="fa-solid fa-bolt"></i> [01] TRANSF.04
+                            </button>
+                            <button class="scanner-tab" data-asset="motor">
+                                <i class="fa-solid fa-charging-station"></i> [02] MOTOR.12
+                            </button>
+                            <button class="scanner-tab" data-asset="chiller">
+                                <i class="fa-solid fa-snowflake"></i> [03] CHILLER.09
+                            </button>
+                        </div>
+                        
+                        <div class="scanner-viewport">
+                            <div class="scan-grid-lines"></div>
+                            <div class="scan-line"></div>
+                            
+                            <!-- 3D Holographic Model Layered Slices -->
+                            <div class="model-layers active" id="layers-transformer">
+                                <div class="model-layer layer-back" style="background-image: url('assets/images/transformer_3d.png');"></div>
+                                <div class="model-layer layer-center" style="background-image: url('assets/images/transformer_3d.png');"></div>
+                                <div class="model-layer layer-front" style="background-image: url('assets/images/transformer_3d.png');"></div>
+                            </div>
+                            
+                            <div class="model-layers" id="layers-motor">
+                                <div class="model-layer layer-back" style="background-image: url('assets/images/motor_3d.png');"></div>
+                                <div class="model-layer layer-center" style="background-image: url('assets/images/motor_3d.png');"></div>
+                                <div class="model-layer layer-front" style="background-image: url('assets/images/motor_3d.png');"></div>
+                            </div>
+                            
+                            <div class="model-layers" id="layers-chiller">
+                                <div class="model-layer layer-back" style="background-image: url('assets/images/chiller_3d.png');"></div>
+                                <div class="model-layer layer-center" style="background-image: url('assets/images/chiller_3d.png');"></div>
+                                <div class="model-layer layer-front" style="background-image: url('assets/images/chiller_3d.png');"></div>
+                            </div>
+                            
+                            <!-- Blueprint SVGs -->
+                            <!-- 1. Transformer Blueprint -->
+                            <svg class="blueprint-svg active" id="blueprint-transformer" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Bushings -->
+                                <g class="cad-part part-bushings">
+                                    <line x1="70" y1="12" x2="88" y2="12" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="89" y="14" fill="#00A651" font-size="3" font-family="monospace" class="part-text">ISOLADORES</text>
+                                </g>
+                                
+                                <!-- Core -->
+                                <g class="cad-part part-core">
+                                    <line x1="50" y1="50" x2="8" y2="50" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="7" y="48" fill="#00A651" font-size="3" font-family="monospace" text-anchor="end" class="part-text">NUCLEO</text>
+                                </g>
+                                
+                                <!-- Coils -->
+                                <g class="cad-part part-coil-left">
+                                    <line x1="38" y1="50" x2="8" y2="62" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="7" y="65" fill="#00A651" font-size="3" font-family="monospace" text-anchor="end" class="part-text">BOBINAS</text>
+                                </g>
+                                <g class="cad-part part-coil-right">
+                                </g>
+                                
+                                <!-- Cooling Fins -->
+                                <g class="cad-part part-fins">
+                                    <line x1="78" y1="55" x2="88" y2="55" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="89" y="57" fill="#00A651" font-size="3" font-family="monospace" class="part-text">ALETAS</text>
+                                </g>
+                            </svg>
+                            
+                            <!-- 2. Motor Blueprint -->
+                            <svg class="blueprint-svg" id="blueprint-motor" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Junction Box -->
+                                <g class="cad-part part-jbox">
+                                    <line x1="50" y1="13" x2="88" y2="13" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="89" y="15" fill="#00A651" font-size="3" font-family="monospace" class="part-text">CONEXAO</text>
+                                </g>
+                                
+                                <!-- Stator / Casing -->
+                                <g class="cad-part part-stator">
+                                    <line x1="45" y1="65" x2="8" y2="65" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="7" y="63" fill="#00A651" font-size="3" font-family="monospace" text-anchor="end" class="part-text">ESTATOR</text>
+                                </g>
+                                
+                                <!-- Rotor & Shaft -->
+                                <g class="cad-part part-rotor">
+                                    <line x1="78" y1="48" x2="88" y2="48" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="89" y="50" fill="#00A651" font-size="3" font-family="monospace" class="part-text">ROTOR</text>
+                                </g>
+                                
+                                <!-- Cooling Fan -->
+                                <g class="cad-part part-fan">
+                                    <line x1="21" y1="48" x2="8" y2="35" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="7" y="33" fill="#00A651" font-size="3" font-family="monospace" text-anchor="end" class="part-text">HELICE</text>
+                                </g>
+                            </svg>
+                            
+                            <!-- 3. Chiller Blueprint -->
+                            <svg class="blueprint-svg" id="blueprint-chiller" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Chiller housing -->
+                                <g class="cad-part part-housing">
+                                    <line x1="15" y1="30" x2="5" y2="15" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="5" y="11" fill="#00A651" font-size="3" font-family="monospace" class="part-text">GABINETE</text>
+                                </g>
+                                
+                                <!-- Compressors -->
+                                <g class="cad-part part-compressor-left">
+                                    <line x1="30" y1="45" x2="8" y2="45" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="7" y="43" fill="#00A651" font-size="3" font-family="monospace" text-anchor="end" class="part-text">COMPRESSOR</text>
+                                </g>
+                                <g class="cad-part part-compressor-right">
+                                </g>
+                                
+                                <!-- Fan Outlines -->
+                                <g class="cad-part part-chiller-fans">
+                                    <line x1="50" y1="22" x2="88" y2="22" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="89" y="24" fill="#00A651" font-size="3" font-family="monospace" class="part-text">EXAUSTOR</text>
+                                </g>
+                                
+                                <!-- Piping Connections -->
+                                <g class="cad-part part-piping">
+                                    <line x1="90" y1="38" x2="90" y2="58" stroke="#00A651" stroke-width="0.5" class="part-pointer" stroke-dasharray="2 1"/>
+                                    <text x="89" y="63" fill="#00A651" font-size="3" font-family="monospace" class="part-text">FLUXO</text>
+                                </g>
+                            </svg>
+                            
+                            <div class="hud-target-box">
+                                <span class="scan-status">ESCANEANDO [OK]</span>
+                                <span class="scan-target" id="scan-target-id">REF.SIS: TR-004</span>
+                            </div>
+                        </div>
+                        
+                        <div class="scanner-telemetry">
+                            <div class="telemetry-grid">
+                                <div class="tel-item">
+                                    <span class="tel-lbl">TENSÃO</span>
+                                    <span class="tel-val" id="tel-volts">13.8 kV</span>
+                                </div>
+                                <div class="tel-item">
+                                    <span class="tel-lbl">TAXA DE CARGA</span>
+                                    <span class="tel-val" id="tel-load">82.4%</span>
+                                </div>
+                                <div class="tel-item">
+                                    <span class="tel-lbl">TEMP. NÚCLEO</span>
+                                    <span class="tel-val" id="tel-temp">41.2°C</span>
+                                </div>
+                                <div class="tel-item">
+                                    <span class="tel-lbl">FREQUÊNCIA</span>
+                                    <span class="tel-val" id="tel-freq">60.00 Hz</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

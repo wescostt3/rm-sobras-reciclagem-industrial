@@ -3211,7 +3211,8 @@ body.loaded .boot-loader {
 
 /* C. HERO SCANNER HUD SPLIT */
 @media (min-width: 992px) {
-    .hero-grid-split {
+    .hero-grid-split,
+    .cta-grid-split {
         display: grid;
         grid-template-columns: 1.2fr 0.8fr;
         gap: 50px;
