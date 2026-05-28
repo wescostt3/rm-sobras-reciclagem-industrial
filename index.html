@@ -1478,15 +1478,15 @@
 
             // scene
             const scene = new THREE.Scene();
-            scene.background = null; // Transparent background
+            scene.background = new THREE.Color('#000000');
 
             // renderer
-            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            const renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setSize(width, height);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, window.innerWidth < 768 ? 1.0 : 1.5));
             renderer.shadowMap.enabled = true;
             renderer.shadowMap.type = THREE.PCFShadowMap;
-            renderer.setClearAlpha(0); // Make sure it's transparent
+            renderer.setClearAlpha(1);
 
             // Append to container
             container.appendChild(renderer.domElement);
@@ -1516,10 +1516,7 @@
             // orbit controls
             const controls = new OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
-            controls.dampingFactor = 0.05;
-            controls.enableZoom = false;
-            controls.enablePan = false;
-            controls.enableRotate = false;
+            controls.dampingFactor = 0.125;
 
             // Animation Loop Control with IntersectionObserver
             let isVisible = true;
@@ -1543,13 +1540,6 @@
             function animate(time) {
                 if (!isVisible) return;
                 controls.update();
-                
-                // Custom subtle rotation of the spline scene for micro-interaction
-                if (splineSceneObj) {
-                    splineSceneObj.rotation.y = Math.sin(time * 0.0005) * 0.15;
-                    splineSceneObj.rotation.x = Math.cos(time * 0.0005) * 0.05;
-                }
-
                 renderer.render(scene, camera);
             }
 
