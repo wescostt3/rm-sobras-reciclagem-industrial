@@ -39,7 +39,7 @@ body {
     font-size: 16px;
     line-height: 1.6;
     overflow-x: hidden;
-    padding-top: 113px; /* Header height (75px) + top ticker (38px) */
+    padding-top: 0 !important; /* Header floats on top of hero for full background coverage */
     padding-bottom: 45px; /* Switcher offset at bottom */
 }
 
@@ -323,9 +323,18 @@ img {
     }
 }
 
+@keyframes fadeInSimple {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 .prototype-view.active {
     display: block;
-    animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: fadeInSimple 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 /* =========================================================================
@@ -487,7 +496,7 @@ img {
     flex-direction: column;
     justify-content: center;
     background-color: #030712;
-    padding-top: 100px;
+    padding-top: 160px; /* Pushed down to clear the header */
     padding-bottom: 120px;
     overflow: hidden;
 }
@@ -2454,10 +2463,11 @@ img {
    3. RESPONSIVE DESIGN & MEDIA QUERIES
    ========================================================================= */
 @media (max-width: 991px) {
-    body { padding-top: 70px; }
+    body { padding-top: 0 !important; }
     .grid-4 { grid-template-columns: repeat(2, 1fr); }
     .grid-3 { grid-template-columns: repeat(2, 1fr); }
     .hero-title { font-size: 44px; }
+    .hero-section { padding-top: 120px; }
     .equip-grid { grid-template-columns: repeat(2, 1fr); }
     .branding-tabs-nav {
         position: static;
@@ -2481,7 +2491,7 @@ img {
 }
 
 @media (max-width: 768px) {
-    body { padding-top: 70px !important; }
+    body { padding-top: 0 !important; }
     body.view-branding-active { padding-top: 0 !important; }
     
     #prototype-switcher {
@@ -2677,7 +2687,7 @@ img {
 }
 
 @media (max-width: 480px) {
-    body { padding-top: 60px !important; }
+    body { padding-top: 0 !important; }
     body.view-branding-active { padding-top: 0 !important; }
     
     .stats-grid {
@@ -3798,22 +3808,26 @@ body.loaded .boot-loader {
 #hero-spline-3d {
     position: absolute;
     top: 0;
-    left: auto;
+    left: 0;
     right: 0;
-    width: 48%;
+    width: 100%; /* Stretch background across the entire hero */
     height: 100%;
     z-index: 1;
     pointer-events: auto;
     opacity: 1;
+    overflow: hidden;
 }
 
 #hero-spline-3d canvas {
     display: block;
-    width: 100% !important;
+    width: 160% !important; /* Scale up to shift the 3D scene center to the right */
+    max-width: none !important;
     height: 100% !important;
+    max-height: 100% !important;
     outline: none;
-    max-width: 100%;
-    max-height: 100%;
+    position: absolute;
+    left: -5% !important; /* Positioning the orb at 75% screen width */
+    top: 0;
 }
 
 @media (max-width: 991px) {
@@ -3824,6 +3838,13 @@ body.loaded .boot-loader {
         width: 100%;
         pointer-events: none; /* Let clicks pass through to buttons */
         opacity: 0.35;
+    }
+    
+    #hero-spline-3d canvas {
+        width: 100% !important;
+        max-width: 100% !important;
+        left: 0 !important;
+        position: relative;
     }
     
     .hero-text-block {
