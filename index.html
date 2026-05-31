@@ -150,11 +150,11 @@
                         </div>
                     </a>
                     
-                    <button class="mobile-nav-toggle" aria-label="Abrir menu">
+                    <button class="mobile-nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-menu">
                         <i class="fa-solid fa-bars"></i>
                     </button>
 
-                    <nav class="nav-menu">
+                    <nav id="nav-menu" class="nav-menu">
                         <a href="#inicio" class="nav-link active">Início</a>
                         <a href="#sobre" class="nav-link">Sobre</a>
                         <a href="#servicos" class="nav-link">Serviços</a>
@@ -926,11 +926,11 @@
                             <img src="assets/logos/logo-transparent-light-text.png" alt="Logo RM" class="footer-logo">
                             <p class="mt-20">Compra, venda, desmonte e descaracterização com alta responsabilidade operacional e sustentabilidade ambiental.</p>
                             <div class="social-links mt-20">
-                                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                                <a href="#"><i class="fa-brands fa-youtube"></i></a>
-                            </div>
+                                 <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Acessar página do Facebook da RM Sobras"><i class="fa-brands fa-facebook-f"></i></a>
+                                 <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Acessar perfil do Instagram da RM Sobras"><i class="fa-brands fa-instagram"></i></a>
+                                 <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="Acessar perfil do LinkedIn da RM Sobras"><i class="fa-brands fa-linkedin-in"></i></a>
+                                 <a href="https://youtube.com" target="_blank" rel="noopener" aria-label="Acessar canal do YouTube da RM Sobras"><i class="fa-brands fa-youtube"></i></a>
+                             </div>
                         </div>
                         <div class="footer-nav-column">
                             <h3>Navegação</h3>
@@ -1453,6 +1453,12 @@
 
     </main>
 
+    <!-- Mobile Menu Backdrop Overlay -->
+    <div id="mobile-nav-backdrop" class="mobile-nav-backdrop"></div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container"></div>
+
     <!-- Custom JS -->
     <script src="app.js"></script>
     <script type="module">
@@ -1461,20 +1467,27 @@
         import SplineLoader from '@splinetool/loader';
 
         /* =========================================================================
-           3D HERO SPLINE ELEMENT INTEGRATION
+           3D HERO SPLINE ELEMENT INTEGRATION (REACTIVE ORB)
            ========================================================================= */
         function initHeroSpline3D() {
             const container = document.getElementById('hero-spline-3d');
             if (!container) return;
 
             // Get container size
-            let width = container.clientWidth || 500;
-            let height = container.clientHeight || 500;
+            let width = container.clientWidth || window.innerWidth;
+            let height = container.clientHeight || window.innerHeight;
 
-            // camera
-            const camera = new THREE.PerspectiveCamera(45, width / height, 70, 100000);
-            camera.position.set(63.27, 231.88, 1371.71);
-            camera.quaternion.setFromEuler(new THREE.Euler(-0.01, 0.04, 0));
+            // camera (Orthographic Camera from user snippet)
+            const camera = new THREE.OrthographicCamera(
+                width / - 2, 
+                width / 2, 
+                height / 2, 
+                height / - 2,  
+                -50000, 
+                10000
+            );
+            camera.position.set(0, 0, 0);
+            camera.quaternion.setFromEuler(new THREE.Euler(0, 0, 0));
 
             // scene
             const scene = new THREE.Scene();
@@ -1495,21 +1508,28 @@
             const loader = new SplineLoader();
             let splineSceneObj = null;
 
+            // Load the local or CDN spline code scene
             loader.load(
-                'https://prod.spline.design/3GAvTALsxhf632hn/scene.splinecode',
+                'assets/scene.splinecode',
                 (splineScene) => {
                     splineSceneObj = splineScene;
                     scene.add(splineScene);
                     
-                    // Adjust scene/object scale dynamically
+                    // Adjust scale and position
                     adjustSplineSceneScale();
                 },
                 undefined,
                 (error) => {
-                    console.error('Erro ao carregar o elemento 3D do Spline:', error);
-                    if (typeof window.addSystemLog === 'function') {
-                        window.addSystemLog('ERRO NO CARREGAMENTO 3D DO SPLINE.');
-                    }
+                    console.warn('Erro ao carregar o elemento 3D do Spline local. Tentando CDN...', error);
+                    // Try fallback to remote CDN URL if local fails
+                    loader.load(
+                        'https://prod.spline.design/5UBGNcIJkWmPPk2Q/scene.splinecode',
+                        (splineScene) => {
+                            splineSceneObj = splineScene;
+                            scene.add(splineScene);
+                            adjustSplineSceneScale();
+                        }
+                    );
                 }
             );
 
@@ -1517,6 +1537,8 @@
             const controls = new OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.125;
+            controls.enableZoom = false; // Disable scroll zoom
+            controls.enablePan = false; // Disable panning
 
             // Animation Loop Control with IntersectionObserver
             let isVisible = true;
@@ -1550,37 +1572,40 @@
                 width = container.clientWidth;
                 height = container.clientHeight;
 
-                camera.aspect = width / height;
+                camera.left = width / - 2;
+                camera.right = width / 2;
+                camera.top = height / 2;
+                camera.bottom = height / - 2;
                 camera.updateProjectionMatrix();
-                renderer.setSize(width, height);
                 
+                renderer.setSize(width, height);
                 adjustSplineSceneScale();
             }
 
             function adjustSplineSceneScale() {
                 if (!splineSceneObj) return;
                 
-                // Responsive scaling and positioning based on viewport width
                 const screenWidth = window.innerWidth;
                 let scale = 1.0;
                 let posX = 0;
                 let posY = 0;
                 
+                // Fine-tune scale and position for the Orthographic camera reactive orb
                 if (screenWidth < 576) {
-                    scale = 0.4;  // Slightly more compact to preserve text contrast
+                    scale = 0.45; 
                     posX = 0;
-                    posY = -60;
+                    posY = -50;
                 } else if (screenWidth < 992) {
-                    scale = 0.6;
+                    scale = 0.65;
                     posX = 0;
                     posY = -30;
                 } else if (screenWidth < 1200) {
-                    scale = 0.75;
-                    posX = 240;  // Shift right further to clear left-aligned text
+                    scale = 0.8;
+                    posX = 200; 
                     posY = 0;
                 } else {
-                    scale = 0.9;  // Scaled down to prevent overlapping the text block
-                    posX = 360;  // Shift right further to fully clear 650px text container
+                    scale = 1.05; // Scaled to sit perfectly on the right side
+                    posX = 320; 
                     posY = 0;
                 }
                 
