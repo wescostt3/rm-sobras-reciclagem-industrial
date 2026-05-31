@@ -3798,8 +3798,9 @@ body.loaded .boot-loader {
 #hero-spline-3d {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
+    left: auto;
+    right: 0;
+    width: 48%;
     height: 100%;
     z-index: 1;
     pointer-events: auto;
@@ -3818,6 +3819,9 @@ body.loaded .boot-loader {
 @media (max-width: 991px) {
     /* Below 992px, make it float behind the text content with controlled opacity */
     #hero-spline-3d {
+        left: 0;
+        right: auto;
+        width: 100%;
         pointer-events: none; /* Let clicks pass through to buttons */
         opacity: 0.35;
     }

@@ -26,7 +26,7 @@
         "three/examples/jsm/math/MeshSurfaceSampler.js": "https://unpkg.com/three@0.158.0/examples/jsm/math/MeshSurfaceSampler.js",
         "three/examples/jsm/misc/GPUComputationRenderer.js": "https://unpkg.com/three@0.158.0/examples/jsm/misc/GPUComputationRenderer.js",
         "three/examples/jsm/utils/BufferGeometryUtils.js": "https://unpkg.com/three@0.158.0/examples/jsm/utils/BufferGeometryUtils.js",
-        "@splinetool/loader": "https://unpkg.com/@splinetool/loader@1.9.0/build/SplineLoader.js"
+        "@splinetool/runtime": "https://unpkg.com/@splinetool/runtime@1.12.95/build/runtime.js"
       }
     }
     </script>
@@ -1462,9 +1462,7 @@
     <!-- Custom JS -->
     <script src="app.js"></script>
     <script type="module">
-        import * as THREE from 'three';
-        import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-        import SplineLoader from '@splinetool/loader';
+        import { Application } from '@splinetool/runtime';
 
         /* =========================================================================
            3D HERO SPLINE ELEMENT INTEGRATION (REACTIVE ORB)
@@ -1473,145 +1471,36 @@
             const container = document.getElementById('hero-spline-3d');
             if (!container) return;
 
-            // Get container size
-            let width = container.clientWidth || window.innerWidth;
-            let height = container.clientHeight || window.innerHeight;
+            // Clear container
+            container.innerHTML = '';
 
-            // camera (Orthographic Camera from user snippet)
-            const camera = new THREE.OrthographicCamera(
-                width / - 2, 
-                width / 2, 
-                height / 2, 
-                height / - 2,  
-                -50000, 
-                10000
-            );
-            camera.position.set(0, 0, 0);
-            camera.quaternion.setFromEuler(new THREE.Euler(0, 0, 0));
+            // Create canvas
+            const canvas = document.createElement('canvas');
+            canvas.id = 'spline-canvas';
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            canvas.style.background = 'transparent';
+            container.appendChild(canvas);
 
-            // scene
-            const scene = new THREE.Scene();
-            scene.background = new THREE.Color('#000000');
-
-            // renderer
-            const renderer = new THREE.WebGLRenderer({ antialias: true });
-            renderer.setSize(width, height);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, window.innerWidth < 768 ? 1.0 : 1.5));
-            renderer.shadowMap.enabled = true;
-            renderer.shadowMap.type = THREE.PCFShadowMap;
-            renderer.setClearAlpha(1);
-
-            // Append to container
-            container.appendChild(renderer.domElement);
-
-            // spline scene
-            const loader = new SplineLoader();
-            let splineSceneObj = null;
-
-            // Load the local or CDN spline code scene
-            loader.load(
-                'assets/scene.splinecode',
-                (splineScene) => {
-                    splineSceneObj = splineScene;
-                    scene.add(splineScene);
-                    
-                    // Adjust scale and position
-                    adjustSplineSceneScale();
-                },
-                undefined,
-                (error) => {
-                    console.warn('Erro ao carregar o elemento 3D do Spline local. Tentando CDN...', error);
-                    // Try fallback to remote CDN URL if local fails
-                    loader.load(
-                        'https://prod.spline.design/5UBGNcIJkWmPPk2Q/scene.splinecode',
-                        (splineScene) => {
-                            splineSceneObj = splineScene;
-                            scene.add(splineScene);
-                            adjustSplineSceneScale();
-                        }
-                    );
-                }
-            );
-
-            // orbit controls
-            const controls = new OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true;
-            controls.dampingFactor = 0.125;
-            controls.enableZoom = false; // Disable scroll zoom
-            controls.enablePan = false; // Disable panning
-
-            // Animation Loop Control with IntersectionObserver
-            let isVisible = true;
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    isVisible = entry.isIntersecting;
-                    if (isVisible) {
-                        renderer.setAnimationLoop(animate);
-                    } else {
-                        renderer.setAnimationLoop(null);
+            // Initialize Spline Application
+            const spline = new Application(canvas);
+            
+            // Load local asset first, fallback to remote CDN
+            spline.load('assets/scene.splinecode')
+                .then(() => {
+                    if (spline.renderer) {
+                        spline.renderer.setClearAlpha(0);
                     }
+                })
+                .catch((error) => {
+                    console.warn('Erro ao carregar o elemento 3D do Spline local. Tentando CDN...', error);
+                    spline.load('https://prod.spline.design/5UBGNcIJkWmPPk2Q/scene.splinecode')
+                        .then(() => {
+                            if (spline.renderer) {
+                                spline.renderer.setClearAlpha(0);
+                            }
+                        });
                 });
-            }, { threshold: 0.1 });
-
-            const heroSection = document.getElementById('inicio');
-            if (heroSection) {
-                observer.observe(heroSection);
-            }
-
-            function animate(time) {
-                if (!isVisible) return;
-                controls.update();
-                renderer.render(scene, camera);
-            }
-
-            window.addEventListener('resize', onWindowResize);
-
-            function onWindowResize() {
-                if (!container) return;
-                width = container.clientWidth;
-                height = container.clientHeight;
-
-                camera.left = width / - 2;
-                camera.right = width / 2;
-                camera.top = height / 2;
-                camera.bottom = height / - 2;
-                camera.updateProjectionMatrix();
-                
-                renderer.setSize(width, height);
-                adjustSplineSceneScale();
-            }
-
-            function adjustSplineSceneScale() {
-                if (!splineSceneObj) return;
-                
-                const screenWidth = window.innerWidth;
-                let scale = 1.0;
-                let posX = 0;
-                let posY = 0;
-                
-                // Fine-tune scale and position for the Orthographic camera reactive orb
-                if (screenWidth < 576) {
-                    scale = 0.45; 
-                    posX = 0;
-                    posY = -50;
-                } else if (screenWidth < 992) {
-                    scale = 0.65;
-                    posX = 0;
-                    posY = -30;
-                } else if (screenWidth < 1200) {
-                    scale = 0.8;
-                    posX = 200; 
-                    posY = 0;
-                } else {
-                    scale = 1.05; // Scaled to sit perfectly on the right side
-                    posX = 320; 
-                    posY = 0;
-                }
-                
-                splineSceneObj.scale.set(scale, scale, scale);
-                splineSceneObj.position.set(posX, posY, 0);
-            }
         }
 
         // Run immediately or on DOMContentLoaded
